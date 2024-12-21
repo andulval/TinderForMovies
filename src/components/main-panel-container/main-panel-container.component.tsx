@@ -21,9 +21,7 @@ const MainPanelContainer = () => {
       {movies.length < 1 ? (
         <Spinner />
       ) : (
-        movies.map((movie) => {
-          return <MovieCardComponent key={movie.id} movie={movie} />;
-        })
+        <MovieCardComponent key={movies[0].id} movie={movies[0]} />
       )}
     </div>
   );
