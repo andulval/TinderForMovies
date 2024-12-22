@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { SpinnerContainer } from "../spinner/spinner.styles";
 
 export const BaseButton = styled.button`
-  min-width: 100px;
   width: auto;
-  height: 50px;
+  height: auto;
   letter-spacing: 0.5px;
   line-height: 50px;
   padding: 0 35px 0 35px;
@@ -29,24 +28,45 @@ export const BaseButton = styled.button`
 `;
 
 export const AcceptButton = styled(BaseButton)`
-  background-color: #4285f4;
+  background-color: transparent;
   color: white;
+  transition: 10.3s fill ease-in;
+  padding: 0px;
+
+  svg {
+    width: 50px;
+    height: 50px;
+    fill: greenyellow;
+  }
 
   &:hover {
-    background-color: #357ae8;
+    background-color: transparent;
     border: none;
+    svg {
+      width: 50px;
+      height: 50px;
+      fill: green;
+    }
   }
 `;
 
 export const RejectButton = styled(BaseButton)`
-  background-color: white;
-  color: black;
-  border: 1px solid black;
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+
+  svg {
+    width: 50px;
+    height: 50px;
+    fill: red;
+  }
 
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: transparent;
     border: none;
+    svg {
+      fill: #c70b0b;
+    }
   }
 `;
 

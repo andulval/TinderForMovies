@@ -9,8 +9,10 @@ export type Movie = {
 };
 
 export const fetchMovies = async (): Promise<Movie[]> => {
+  //mock .fetch() API
   return new Promise((resolve) => {
     setTimeout(() => {
+      console.log("GET movie called");
       resolve(movieData);
     }, 1000);
   });

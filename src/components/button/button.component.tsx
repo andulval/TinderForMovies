@@ -1,4 +1,8 @@
+/// <reference types="vite-plugin-svgr/client" />
 import { FC, ButtonHTMLAttributes } from "react";
+import AcceptIcon from "../../assets/accept.svg?react";
+import RejectIcon from "../../assets/reject.svg?react";
+
 import {
   BaseButton,
   AcceptButton,
@@ -12,7 +16,8 @@ export enum BUTTON_TYPE_CLASSES {
   reject = "reject",
 }
 
-const getButton = ( //return sstyled component from available options
+const getButton = (
+  //return sstyled component from available options
   buttonType = BUTTON_TYPE_CLASSES.base
 ): React.ComponentType<ButtonHTMLAttributes<HTMLButtonElement>> =>
   ({
@@ -29,13 +34,21 @@ export type ButtonProps = {
 const Button: FC<ButtonProps> = ({
   children,
   buttonType,
-  isLoading,
+  isLoading = false,
   ...otherProps
 }) => {
   const CustomButton = getButton(buttonType);
   return (
     <CustomButton disabled={isLoading} {...otherProps}>
-      {isLoading ? <ButtonSpinner /> : children}
+      {isLoading ? (
+        <ButtonSpinner /> // Only show the spinner if loading
+      ) : (
+        <>
+          {buttonType === BUTTON_TYPE_CLASSES.accept && <AcceptIcon />}
+          {buttonType === BUTTON_TYPE_CLASSES.reject && <RejectIcon />}
+          {children}
+        </>
+      )}
     </CustomButton>
   );
 };
