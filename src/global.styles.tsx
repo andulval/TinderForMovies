@@ -28,8 +28,10 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
   place-items: center;
-  min-width: 320px;
+  min-width: 300px;
   min-height: 100vh;
 }
 

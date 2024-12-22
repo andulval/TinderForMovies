@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
+// Wrapper for the main component that will contain the overlay
+export const MainComponentWrapper = styled.div`
+  position: relative;
+`;
+
+// Overlay to gray out only the main component
 export const Overlay = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -11,10 +17,5 @@ export const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-`;
-export const MoviePanelWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid gray;
   border-radius: 10px;
 `;
