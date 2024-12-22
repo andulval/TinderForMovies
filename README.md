@@ -1,50 +1,29 @@
-# React + TypeScript + Vite
+# Tinder for movies - Task for Frontend Developer
+[Link to the website](https://tinder-for-movies-ten.vercel.app/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Objective: create a single-page application for selecting a movie to watch using your phone.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 🚀 Functionalities
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+>User can sign up with email and password
 
-- Configure the top-level `parserOptions` property like this:
+>User can log-in with google or email and password
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+>User can add products to cart
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+>mini-cart to preview currently added products
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+>User can make a test payment. The app provides feedback with the option to restore the previous cart if there is an error during the payment process
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+>All data is persistent and stored in Firestore.
+>
+
+## 🚀 Technologies Used:
+
+>React Hooks
+
+>React Suspense + React Lazy
+
+>Styled-Components
