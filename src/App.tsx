@@ -5,7 +5,7 @@ import Spinner from "./components/spinner/spinner.component";
 
 const MainPanelContainer = lazy(
   () =>
-    import("./components/main-panel-container/main-panel-container.component")
+    import("./components/movie-rating-panel/movie-rating-panel.component")
 );
 
 function App() {

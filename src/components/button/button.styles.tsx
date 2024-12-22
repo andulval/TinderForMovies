@@ -29,14 +29,14 @@ export const BaseButton = styled.button`
 
 export const AcceptButton = styled(BaseButton)`
   background-color: transparent;
-  color: white;
-  transition: 10.3s fill ease-in;
+  color: green;
   padding: 0px;
 
   svg {
     width: 50px;
     height: 50px;
-    fill: greenyellow;
+    fill: green;
+    transition: fill 0.3s ease-in;
   }
 
   &:hover {
@@ -45,27 +45,29 @@ export const AcceptButton = styled(BaseButton)`
     svg {
       width: 50px;
       height: 50px;
-      fill: green;
+      fill: #00a800;
     }
   }
 `;
 
 export const RejectButton = styled(BaseButton)`
   background-color: transparent;
+  color: #c60000;
   border: none;
   padding: 0px;
 
   svg {
     width: 50px;
     height: 50px;
-    fill: red;
+    fill: #c60000;
+    transition: fill 0.3s ease-in;
   }
 
   &:hover {
     background-color: transparent;
     border: none;
     svg {
-      fill: #c70b0b;
+      fill: red;
     }
   }
 `;
