@@ -8,10 +8,13 @@ import {
   MOVIE_STATUS_SET,
 } from "../../utils/backend-api/API-endpoints/movie.PATCH";
 import { MoviePanelWrapper, Overlay } from "./movie-rating-panel.styles";
+import { useSwipeToReject } from "../../hooks/useSwipeToReject";
 
 const MovieRatingPanel = () => {
   const { loading, movies, currentIndex, nextMovie, allRated } = useMovies();
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const currentMovie = movies[currentIndex];
 
   const handleDecision = async (
     movieId: string,
@@ -30,9 +33,12 @@ const MovieRatingPanel = () => {
     }
   };
 
-  if (loading && movies.length === 0) return <Spinner />;
+  const { handleTouchStart, handleTouchEnd } = useSwipeToReject(
+    handleDecision,
+    currentMovie ? currentMovie.id : ""
+  );
 
-  const currentMovie = movies[currentIndex];
+  if (loading && movies.length === 0) return <Spinner />;
 
   if (allRated) {
     return <p>You have rated all the movies! Thank you for your feedback.</p>;
@@ -49,7 +55,10 @@ const MovieRatingPanel = () => {
           <Spinner />
         </Overlay>
       )}
-      <MoviePanelWrapper>
+      <MoviePanelWrapper
+        onTouchStart={handleTouchStart} // Detect touch start
+        onTouchEnd={handleTouchEnd} // Detect touch end
+      >
         <MovieCardComponent movie={currentMovie} />
         <MovieDecision
           onDecision={(decision) => handleDecision(currentMovie.id, decision)}
