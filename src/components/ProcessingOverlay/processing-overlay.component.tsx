@@ -1,21 +1,17 @@
 import Spinner from "../spinner/spinner.component";
-import { Overlay, MainComponentWrapper } from "./processing-overlay.styles";
+import {
+  OverlayBackground,
+  MainComponentWrapper,
+} from "./processing-overlay.styles";
 
-const ProcessingOverlay = ({
-  isProcessing,
-  children,
-}: {
-  isProcessing: boolean;
-  children: React.ReactNode;
-}) => {
-  if (!isProcessing) return <>{children}</>;
-
+const ProcessingOverlay = ({ isProcessing }: { isProcessing: boolean }) => {
   return (
     <MainComponentWrapper>
-      <Overlay>
-        <Spinner />
-      </Overlay>
-      {children}
+      {isProcessing && (
+        <OverlayBackground>
+          <Spinner /> {/* The spinner */}
+        </OverlayBackground>
+      )}
     </MainComponentWrapper>
   );
 };

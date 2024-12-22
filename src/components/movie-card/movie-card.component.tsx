@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Movie as TMovie } from "../../utils/backend-api/API-endpoints/movie.GET";
 import Rating from "../rating/rating.component";
 import {
@@ -20,6 +20,12 @@ const MovieCardComponent: FC<MovieCardComponentProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
+  // Reset image error when imageURL changes
+  useEffect(() => {
+    setImageError(false);
+    setIsLoaded(false); // Reset loading state
+  }, [imageURL]);
+
   // Handle image load event
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -29,20 +35,17 @@ const MovieCardComponent: FC<MovieCardComponentProps> = ({
   };
   return (
     <MovieCardContainer>
-      <MovieCardContainer>
-        <MovieCardTitle>{title}</MovieCardTitle>
-        <Rating rating={rating} />
-        <MovieCardSummary>{summary}</MovieCardSummary>
-
-        <MovieCardImage
-          src={imageError ? "/assets/no-image.png" : imageURL} // Fallback to no-image.svg
-          alt={title}
-          onLoad={handleImageLoad} // Trigger when image is fully loaded
-          onError={handleImageError} // Trigger when image fails to load
-          $isLoaded={isLoaded} // Pass isLoaded as a styled-component custom prop (prefixed with `$`)
-          style={{ objectFit: imageError ? "contain" : "cover" }}
-        />
-      </MovieCardContainer>
+      <MovieCardTitle>{title}</MovieCardTitle>
+      <Rating rating={rating} />
+      <MovieCardSummary>{summary}</MovieCardSummary>
+      <MovieCardImage
+        src={imageError ? "/assets/no-image.png" : imageURL} // Fallback to no-image.svg
+        alt={title}
+        onLoad={handleImageLoad} // Trigger when image is fully loaded
+        onError={handleImageError} // Trigger when image fails to load
+        $isLoaded={isLoaded} // Pass isLoaded as a styled-component custom prop (prefixed with `$`)
+        style={{ objectFit: imageError ? "contain" : "cover" }}
+      />
     </MovieCardContainer>
   );
 };

@@ -50,16 +50,15 @@ const MovieFeedbackPanel = () => {
       />
       {currentMovie && !allRated && (
         <>
-          <ProcessingOverlay isProcessing={isProcessing}>
-            <MoviePanel
-              movie={currentMovie}
-              handleDecision={(decision) =>
-                handleDecision(currentMovie.id, decision)
-              }
-              handleTouchStart={handleTouchStart}
-              handleTouchEnd={handleTouchEnd}
-            />
-          </ProcessingOverlay>
+          <ProcessingOverlay isProcessing={isProcessing} />
+          <MoviePanel
+            movie={currentMovie}
+            handleDecision={(decision) =>
+              handleDecision(currentMovie.id, decision)
+            }
+            handleTouchStart={handleTouchStart}
+            handleTouchEnd={handleTouchEnd}
+          />
         </>
       )}
     </MovieFeedbackPanelContainer>
