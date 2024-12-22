@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   fetchMovies,
   Movie as TMovie,
@@ -12,10 +12,12 @@ import {
 import { Overlay } from "./main-panel-container.styles";
 
 const MainPanelContainer = () => {
-  const [movies, setMovies] = useState<TMovie[]>([]);
   const [loading, setLoading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(6);
+  const [allRated, setAllRated] = useState(false); //to track if all movies are rated
+  // Store the movie list in a ref to persist it without causing re-renders
+  const moviesRef = useRef<TMovie[]>([]);
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -23,7 +25,7 @@ const MainPanelContainer = () => {
       try {
         const initialMovies =
           await fetchMovies(/* Optional: Add paging parameters */); /*From backend API:  Add paging parameters for optimization */
-        setMovies(initialMovies);
+        moviesRef.current = initialMovies; // Save the movie list in ref
       } catch (error) {
         console.error("Failed to fetch movies:", error);
       } finally {
@@ -41,13 +43,12 @@ const MainPanelContainer = () => {
     setIsProcessing(true);
     try {
       await changeMovies(movieId, decision);
-      if (currentIndex + 1 >= movies.length) {
-        //If backend provides pagination: Load more movies if available
-        const newMovies =
-          await fetchMovies(/* Optional: Add paging parameters */);
-        setMovies((prevMovies) => [...prevMovies, ...newMovies]);
+      if (currentIndex + 1 >= moviesRef.current.length) {
+        // If we've reached the end of the list, set `allRated` to true
+        setAllRated(true);
+      } else {
+        setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next movie
       }
-      setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next movie
     } catch (error) {
       console.error("Error processing movie decision:", error);
     } finally {
@@ -55,9 +56,22 @@ const MainPanelContainer = () => {
     }
   };
 
-  if (loading && movies.length === 0) return <Spinner />;
+  // Handle loading and no movies scenario
+  if (loading && moviesRef.current.length === 0) return <Spinner />;
 
-  const currentMovie = movies[currentIndex];
+  const currentMovie = moviesRef.current[currentIndex];
+
+  // If there are no movies available or all have been rated
+  if (allRated) {
+    return <p>You have rated all the movies! Thank you for your feedback.</p>;
+  }
+
+  if (
+    moviesRef.current.length === 0 ||
+    currentIndex >= moviesRef.current.length
+  ) {
+    return <p>No more movies available.</p>;
+  }
 
   return (
     <div>
@@ -66,7 +80,7 @@ const MainPanelContainer = () => {
           <Spinner />
         </Overlay>
       )}
-      {currentMovie ? (
+      {currentMovie && (
         <MovieCardComponent
           movie={currentMovie}
           acceptHandler={() =>
@@ -76,8 +90,6 @@ const MainPanelContainer = () => {
             handleDecision(currentMovie.id, MOVIE_STATUS_SET.reject)
           }
         />
-      ) : (
-        <p>No more movies available.</p>
       )}
     </div>
   );
