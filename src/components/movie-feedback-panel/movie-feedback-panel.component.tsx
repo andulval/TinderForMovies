@@ -8,11 +8,16 @@ import { useSwipeToReject } from "../../hooks/useSwipeToReject";
 import ProcessingOverlay from "../ProcessingOverlay/processing-overlay.component";
 import MoviePanel from "../movie-panel/movie-panel.component";
 import MovieRatingContent from "../movie-rating-content/movie-rating-content.component";
-import { MovieFeedbackPanelContainer } from "./movie-feedback-panel.styles";
+import {
+  MovieFeedbackPanelContainer,
+  MessageContainer,
+} from "./movie-feedback-panel.styles";
 
 const MovieFeedbackPanel = () => {
   const { loading, movies, currentIndex, nextMovie, allRated } = useMovies();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [message, setMessage] = useState(""); // State to hold the message
+  const [messageSuccess, setMessageSuccess] = useState(true); // Track message success (green/red)
 
   const currentMovie = movies[currentIndex];
 
@@ -27,10 +32,19 @@ const MovieFeedbackPanel = () => {
     try {
       await changeMovies(movieId, decision); // Call the backend API to register the decision
       nextMovie(); // Move to the next movie
+      setMessage(
+        decision === MOVIE_STATUS_SET.accept
+          ? "Movie accepted"
+          : "Movie rejected"
+      );
+      setMessageSuccess(decision === MOVIE_STATUS_SET.accept); // Set success status for green/red
     } catch (error) {
+      setMessageSuccess(false);
+      setMessage("Error occurred, try again");
       console.error("Error processing movie decision:", error);
     } finally {
       setIsProcessing(false); // Reset processing state
+      setTimeout(() => setMessage(""), 1000); // Hide message after 1 second
     }
   };
 
@@ -59,6 +73,11 @@ const MovieFeedbackPanel = () => {
             handleTouchStart={handleTouchStart}
             handleTouchEnd={handleTouchEnd}
           />
+          {message && (
+            <MessageContainer $success={messageSuccess}>
+              {message}
+            </MessageContainer>
+          )}
         </>
       )}
     </MovieFeedbackPanelContainer>
