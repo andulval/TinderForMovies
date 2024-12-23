@@ -34,13 +34,13 @@ const MovieFeedbackPanel = () => {
       nextMovie(); // Move to the next movie
       setMessage(
         decision === MOVIE_STATUS_SET.accept
-          ? "Movie accepted"
-          : "Movie rejected"
+          ? "Movie accepted!"
+          : "Movie rejected!"
       );
       setMessageSuccess(decision === MOVIE_STATUS_SET.accept); // Set success status for green/red
     } catch (error) {
       setMessageSuccess(false);
-      setMessage("Error occurred, try again");
+      setMessage("Error occurred, try again!");
       console.error("Error processing movie decision:", error);
     } finally {
       setIsProcessing(false); // Reset processing state
